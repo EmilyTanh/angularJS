@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angularJS的动画</title>
+</head>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-animate.min.js"></script>
+<script src="js/jquery-2.0.js"></script>
+<style>
+div {
+    transition: all linear 0.5s;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#div1.ng-hide {
+    height: 0;
+    width: 0;
+    top:200px;
+    left: 200px;
+}
+@keyframes myChange {
+    from {
+        height: 100px;
+    } to {
+          height: 0px;
+      }
+}
+#div2.ng-hide{
+    animation: 1s myChange;
+}
+</style>
+<body>
+<div ng-app="app">
+    <input type="checkbox" ng-model="check">隐藏div<br>
+    <div style="width:400px; height:200px; background-color: antiquewhite" ng-hide="check" id="div1"></div>
+    <hr>
+    <input type="checkbox" ng-model="check2">隐藏div<br>
+    <div style="width:400px; height:200px; background-color: darkseagreen" ng-hide="check2" id="div2"></div>
+</div>
+</body>
+<script>
+    angular.module("app",['ngAnimate']);
+</script>
+</html>

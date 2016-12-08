@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第一个angular服务文件</title>
+</head>
+<script src="js/angular.min.js"></script>
+<body>
+<div ng-app="app1" ng-controller="ctrl">
+{{content}}
+    <hr>
+转成八进制：{{200 | myFilter}}
+    <hr>
+    当前的浏览器位置：{{url}}
+    <hr>
+    自定义过滤器，在自定义服务器中使用：
+    <ul>
+        <li ng-repeat="x in nums">{{x | myFilter | uppercase}}</li>
+    </ul>
+</div>
+<hr>
+
+<script>
+    var app1 = angular.module("app1",[]);
+    app1.service("firser",function () {
+        this.func = function (x) {
+            return x.toString(16);
+        }
+    });
+    app1.filter("myFilter",["firser",function (fil) {
+        return function (x) {
+            return fil.func(x);
+        }
+    }])
+    app1.controller("ctrl",function ($scope,$location,$http,$timeout,$interval,firser) {
+        $http.get("angular01.html").then(function (response) {
+            $scope.content = response.data;
+        })
+        $timeout(function () {
+            $scope.content = "Today is Saturday";
+        },500);
+        $interval(function () {
+            $scope.content = new Date().toLocaleTimeString();
+        },1000);
+//        $scope.num = 999;
+        $scope.nums = [211,432,543,727,765,345,7876];
+        $scope.url = $location.absUrl();
+    });
+
+</script>
+</body>
+</html>

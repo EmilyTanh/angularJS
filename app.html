@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>应用程序</title>
+</head>
+<script src="js/angular.min.js"></script>
+<script src="js/jquery-2.0.js"></script>
+<body>
+<div ng-app="app1" ng-controller="ctrl">
+    请输入留言：<br>
+    <form name="form1">
+        <textarea name="mess" ng-model="message" style="width: 400px; height: 200px;" required></textarea><br>
+    </form>
+    <button ng-click="submit()" ng-disabled="form1.mess.$error.required">提交</button><button ng-click="reset()" ng-disabled="form1.mess.$error.required">清除</button><br>
+    <span>你还剩下<span ng-bind="cal()"></span>个字可以写</span>
+    <div ng-show="show" id="bbbb">
+        留言板：<br>
+
+    </div>
+</div>
+<script>
+    var app = angular.module("app1",[]);
+    app.controller("ctrl",function ($scope) {
+        $scope.message = "";
+        $scope.number = 0;
+        $scope.submit = function () {
+            $scope.show = true;
+            $scope.broad = $scope.message;
+            $scope.number = $scope.number + 1;
+            $("#bbbb").append($scope.number + "楼：" + $scope.broad + "。<br>");
+        };
+        $scope.reset = function () {
+            $scope.message = "";
+        };
+        $scope.cal = function () {
+            return 200 - $scope.message.length;
+        };
+    })
+</script>
+</body>
+</html>

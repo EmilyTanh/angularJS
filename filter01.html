@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第四个angular文件</title>
+</head>
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<body>
+<hr>
+<h5>-----------------------------大小写的过滤器--------------------------------</h5>
+<div ng-app="app1" ng-controller="ctrl">
+    姓名：<input type="text" ng-model="name"><br>
+    变为大写：{{name | uppercase}}<br>
+    变为小写：{{name | lowercase}}
+    <hr>
+    <h5>-------------------------------数字转货币过滤器----------------------------------</h5>
+    数量：<input type="number" ng-model="number"><br><br>
+    单价：<input type="number" ng-model="price"><br><br>
+    总金额：{{number * price | currency}}
+    <hr>
+    <h5>-------------------------------在指令中加过滤器----------------------------------</h5>
+    <ul>
+        <li ng-repeat="person in bodys | orderBy:'country'">
+            {{person.name + ", " + person.country}}
+        </li>
+    </ul>
+    <hr>
+    <h5>------------------------------filter-------------------------------------------</h5>
+    模糊查询：<input type="text" ng-model="test">
+    <ul>
+        <li ng-repeat="person in bodys | orderBy:'country'">
+            {{person.name}}{{"." + person.country | filter:test}}
+        </li>
+    </ul>
+</div>
+<script>
+    var app1 = angular.module("app1",[]);
+    app1.controller("ctrl", function ($scope) {
+        $scope.bodys = [
+            {name:'AAA',country:'China'},
+            {name:'BBB',country:'Australia'},
+            {name:'CCC',country:'Hollywood'},
+            {name:'DDD',country:'America'}
+        ];
+    });
+</script>
+</body>
+</html>

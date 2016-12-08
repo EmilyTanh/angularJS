@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单验证的页面</title>
+</head>
+<script src="js/angular.min.js"></script>
+<body>
+<div ng-app="app1" ng-controller="ctrl1">
+    <form name="form1">
+        姓：<input type="text" ng-model="user.lastname"><br><br>
+        名：<input type="text" ng-model="user.firstname"><br><br>
+
+        <input type="button" ng-click="reset()" value="重置"><br><br>
+        全名：{{user}}<br>
+        全局变量：{{name}}<br>
+        密码：<input type="password" name="password" ng-model="password" required>
+        <span style="color: crimson;" ng-show="form1.password.$error.required">
+            密码必须存在！！！
+        </span>
+        <br><br>
+        邮箱：<input type="email" name="email" ng-model="email" required>
+        <span style="color: crimson;" ng-show="form1.email.$error || form1.email.$invalid">
+            <span ng-show="form1.email.$error.required">邮箱不能为空！！！</span>
+            <span ng-show="form1.email.$error.email">邮箱的输入无效！！！</span>
+        </span>
+        <br>
+
+    </form>
+</div>
+<script>
+    var app1 = angular.module("app1",[]);
+    app1.controller("ctrl1",function ($scope) {
+        $scope.name={"firstname":"海青","lastname":"谭"};
+        $scope.user = angular.copy($scope.name);
+        $scope.reset = function () {
+            $scope.user = angular.copy($scope.name);
+        }
+//        $scope.reset();
+        $scope.password="fsfsfsf";
+        $scope.email="1760767876@qq.com";
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第一个angularJS表格文件</title>
+</head>
+<script src="js/angular.min.js"></script>
+<body>
+<div ng-app="app1" ng-controller="ctrl1">
+    <table>
+        <tr ng-repeat="data in datas">
+            <td>{{data.Name}}</td>
+            <td>{{data.City}}</td>
+            <td>{{data.Country}}</td>
+        </tr>
+    </table>
+    <hr>
+    <table border="1px">
+        <tr ng-repeat="data in datas | orderBy:'City'">
+            <td ng-if="$odd" style="background-color: bisque">{{$index+1}}</td>
+            <td ng-if="$even" style="background-color: lightgreen">{{$index+1}}</td>
+            <td ng-if="$odd" style="background-color: bisque">{{data.Name}}</td>
+            <td ng-if="$even" style="background-color: lightgreen">{{data.Name}}</td>
+            <td ng-if="$odd" style="background-color: bisque">{{data.City}}</td>
+            <td ng-if="$even" style="background-color: lightgreen">{{data.City}}</td>
+            <td ng-if="$odd" style="background-color: bisque">{{data.Country}}</td>
+            <td ng-if="$even" style="background-color: lightgreen">{{data.Country}}</td>
+        </tr>
+    </table>
+</div>
+<script>
+    var app1 = angular.module("app1",[]);
+    app1.controller("ctrl1",function ($scope,$http) {
+        $http.get("table.txt").success(function (response) {
+            $scope.datas = response.records;
+        })
+    })
+</script>
+</body>
+</html>

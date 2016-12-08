@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第一个angularJS选择器文件</title>
+</head>
+<script src="js/angular.min.js"></script>
+<body>
+<div ng-app="app1" ng-controller="ctrl1">
+    ng-options：
+    <select ng-model="selectedName" ng-options="x for x in names"></select>
+    <hr>
+    ng-repeat：
+    <select>
+        <option ng-repeat="name in names">{{name}}</option>
+    </select>
+    <hr>
+ 选择对象的ng-options：
+    <select ng-model="car" ng-options="x for (x, y) in cars">
+    </select>
+    <h5>你选择的车牌是: {{car.brand}}</h5>
+    <h5>你选择的车型号是: {{car.model}}</h5>
+    <h5>你选择的车颜色是: {{car.color}}</h5>
+    <hr>
+    对象的某一个属性ng-options：
+    <select ng-model="car1" ng-options="y.brand for (x, y) in cars">
+    </select>
+    <h5>你选择的车型号是: {{car1.model}}</h5>
+    <h5>你选择的车颜色是: {{car1.color}}</h5>
+    <hr>
+    json对象的ng-options：
+    <select ng-model="web" ng-options="x.webName for x in webs">
+    </select>
+    <h5>你选择的网站网址是: {{web.url}}</h5>
+    <hr>
+    json对象的ng-repeat：
+    <select ng-model="url" >
+        <option ng-repeat="web1 in webs" value="{{web1.url}}">{{web1.webName}}</option>
+    </select>
+    <h5>你选择的网站网址是：{{url}}</h5>
+</div>
+
+<script>
+    var app = angular.module('app1', []);
+    app.controller('ctrl1', function($scope) {
+        $scope.names = ['AAA','BBB','CCC','DDD','EEE'];
+        $scope.cars = {
+            car01 : {brand : "Ford", model : "Mustang", color : "red"},
+            car02 : {brand : "BMW", model : "Mustang", color : "blank"},
+            car03 : {brand : "VOLVO", model : "Mustang", color : "blue"},
+            car04 : {brand : "AODI", model : "Mustang", color : "white"},
+        };
+        $scope.webs = [
+            {webName:"淘宝",url:"www.taobao.com"},
+            {webName:"蘑菇街",url:"www.mgj.com"},
+            {webName:"微博",url:"www.weibo.com"},
+            {webName:"京东",url:"www.jd.com"}
+        ];
+    });
+</script>
+</body>
+</html>

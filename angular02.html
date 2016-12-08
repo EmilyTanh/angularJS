@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第二个angularJS页面</title>
+</head>
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp">
+    <!-- directive: runoob-directive -->
+</div>
+<script>
+    var app = angular.module("myApp", []);
+    app.directive("runoobDirective", function() {
+        return {
+            restrict : "M",
+            replace : true,
+            template : "<h1>这是一个注释指令</h1>"
+        };
+    });
+</script>
+
+<div id="app2" ng-app="myApp2" s-order>
+</div>
+<script>
+    var app2 = angular.module("myApp2",[]);
+    app2.directive("sOrder",function () {
+        return {
+            restrict:"A",
+            template:"<h3>这是一个属性指令</h3>"
+        };
+    });
+    angular.bootstrap(document.getElementById("app2"),['myApp2']);
+</script>
+
+<div id="app3" ng-app="myApp3">
+    <attr-order></attr-order>
+</div>
+<script>
+    var app3 = angular.module("myApp3",[]);
+    app3.directive("attrOrder",function () {
+        return {
+            restrict:"E",
+            template:"<h4>这是一个元素名指令</h4>"
+        };
+    });
+    angular.bootstrap(document.getElementById("app3"),['myApp3']);
+</script>
+
+<div id="app4" ng-app="myApp4" class="c-order">
+</div>
+<script>
+    var app4 = angular.module("myApp4",[]);
+    app4.directive("cOrder",function () {
+        return {
+            restrict:"C",
+            template:"<h5>这是一个类名指令</h5>"
+        };
+    });
+    angular.bootstrap(document.getElementById("app4"),['myApp4']);
+</script>
+</body>
+</html>

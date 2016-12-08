@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angularJS路由选择</title>
+</head>
+<script src="js/angular.min.js"></script>
+<script src="js/jquery-2.0.js"></script>
+<script src="js/angular-animate.min.js"></script>
+<script src="js/angular-route.min.js"></script>
+<style>
+    #big{
+        width: 1000px;
+        margin: auto;
+        border: 1px solid silver;
+        background-color: aliceblue;
+    }
+    #menu{
+        width: 825px;
+        height: 50px;
+        text-align: center;
+        margin: auto;
+        margin-bottom: 10px;
+        background-color: antiquewhite;
+    }
+    #con{
+        width: 825px;
+        margin: auto;
+    }
+    #menu ul{
+        list-style: none;
+    }
+    #menu ul li{
+        float: left;
+        width: 150px;
+        line-height: 50px;
+    }
+    #menu ul li a{
+        text-decoration: none;
+    }
+    #menu ul li:hover{
+        background-color: beige;
+        text-decoration: none;
+    }
+</style>
+<body>
+<div id="big" ng-app="app1" ng-controller="ctrl">
+    <div id="menu">
+        <ul>
+            <li><a href="#/">首页</a></li>
+            <li><a href="#/animate">动画</a></li>
+            <li><a href="#/service">服务</a></li>
+            <li><a href="#/filter">过滤器</a></li>
+            <li><a href="#/test">测试</a></li>
+        </ul>
+    </div>
+    <div id="con" ng-view></div>
+</div>
+<script>
+    var app1 = angular.module("app1",['ngRoute','ngAnimate']);
+    app1.config(['$routeProvider',function ($routeProvider) {
+        $routeProvider
+        .when('/',{templateUrl:'angular01.html'})
+        .when('/animate',{templateUrl:'animates.html'})
+        .when('/service',{templateUrl:'service.html'})
+        .when('/filter',{templateUrl:'filter01.html'})
+        .when('/test',{templateUrl:'test.html'});
+    }]);
+    app1.service("firser",function () {
+        this.func = function (x) {
+            return x.toString(16);
+        }
+    });
+    app1.filter("myFilter",["firser",function (fil) {
+        return function (x) {
+            return fil.func(x);
+        }
+    }])
+    app1.controller("ctrl",function ($scope,$location,$http,$timeout,$interval,firser) {
+        $http.get("angular01.html").then(function (response) {
+            $scope.content = response.data;
+        })
+        $timeout(function () {
+            $scope.content = "Today is Saturday";
+        },500);
+        $interval(function () {
+            $scope.content = new Date().toLocaleTimeString();
+        },1000);
+//        $scope.num = 999;
+        $scope.nums = [211,432,543,727,765,345,7876];
+        $scope.url = $location.absUrl();
+
+        $scope.bodys = [
+            {name:'AAA',country:'China'},
+            {name:'BBB',country:'Australia'},
+            {name:'CCC',country:'Hollywood'},
+            {name:'DDD',country:'America'}
+        ];
+
+        $http.get("table.txt").success(function (response) {
+            $scope.persons = response.records;
+        });
+        $scope.edit = true;
+
+        $scope.userEdit = function (id) {
+            $scope.num = id;
+            if(id == 'new'){
+                $scope.edit = true;
+                $scope.name = "";
+                $scope.city = "";
+                $scope.country = "";
+                $scope.record = document.getElementById("table1").rows.length;
+            }else{
+                $scope.edit = false;
+                $scope.name = $scope.persons[id].Name;
+                $scope.city = $scope.persons[id].City;
+                $scope.country = $scope.persons[id].Country;
+            }
+        }
+        $scope.update = function (no) {
+            $scope.persons[no].Name = $scope.name;
+            $scope.persons[no].City = $scope.city;
+            $scope.persons[no].Country = $scope.country;
+        };
+
+        $scope.add = function () {
+            $scope.persons.push({"Name":$scope.name,"City":$scope.city,"Country":$scope.country});
+        }
+    });
+</script>
+</body>
+</html>

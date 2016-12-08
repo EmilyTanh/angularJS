@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第一个angularJS测试</title>
+</head>
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<body>
+<div id="app1" ng-app="app1">
+    <p ng-init="name1='Emily';age1=20"></p>
+    <p>姓名是：{{name1}},年龄是：{{age1}}；<span ng-bind="'姓名：' + name1 + ',年龄：' + age1"></span></p>
+</div>
+<script>  //当第一个ng-app的值为app1时
+    var app1 = angular.module("app1",[]);
+    //angular.bootstrap(document.getElementById("app1"),['app1']);
+</script>
+<div id="app" ng-app="">
+    <p><input type="text" ng-model="name2"></p>
+    <p>你好，我叫{{name2}}</p>
+</div>
+
+<div id="app3" ng-app="app3">
+    <p><input type="text" ng-model="age"></p>
+    <p>你好，我现在{{age}}岁</p>
+</div>
+
+<div id="app4" ng-app="">
+    <p ng-init="age2=[10,20,30,40,50,60,70,80,90]"></p>
+    <p ng-init="person={firstName:'Wei',lastName:'Vision',age:age2[2]}"></p>
+    <p>{{"姓名：" + person.lastName + "" + person.firstName + "，年龄：" + person.age}}</p>
+</div>
+
+<div id="app5" ng-app="app5" ng-init="names=['AGA','Ben','Cendy','Duck','Emily','Friend']">
+    <ul>
+        <li ng-repeat="name in names">{{name}}</li>
+    </ul>
+</div>
+
+<script>
+    angular.module("app3",[]);
+    angular.module("app5",[]);
+    var app6 = angular.module("app6",[]);
+    angular.bootstrap(document.getElementById("app"),[]); //当后面的ng-app没有属性值时
+    angular.bootstrap(document.getElementById("app3"),['app3']);
+    angular.bootstrap(document.getElementById("app4"),[]);
+    angular.bootstrap(document.getElementById("app5"),['app5']);
+</script>
+</body>
+</html>

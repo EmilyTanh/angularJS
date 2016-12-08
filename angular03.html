@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第三个angularJS文件</title>
+</head>
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<!--<script src="js/jquery-2.0.js"></script>-->
+<body>
+<form ng-app="" name="myForm">
+    Email:
+    <input type="email" name="myAddress" ng-model="text">
+    <span ng-show="myForm.myAddress.$error.email">不是一个合法的邮箱地址</span>
+    <span ng-empty>是一个空的邮箱地址</span>
+    {{myForm.myAddress.$valid}}
+    {{myForm.myAddress.$dirty}}
+    {{myForm.myAddress.$touched}}
+    {{myForm.myAddress.$error }}
+</form>
+<form id="app1" ng-app="app1" name="form1" ng-controller="ctr1">{{chosen}}
+    选择禁用或启用：<input type="text" ng-model="all1"><input id="all" type="checkbox">
+    <input type="text" ng-disabled="all1">
+    <input type="radio" ng-disabled="{{chosen}}">
+    <textarea ng-disabled="chosen"></textarea>
+    <select ng-disabled="chosen">
+        <option>njj</option>
+        <option>fsdfs</option>
+    </select>
+</form>
+<ul id="app2" ng-app="app2" ng-controller="ctrl2">
+    <li ng-repeat="x in names">{{x}}.{{lastname}}</li>
+</ul>
+
+<div id="app3" ng-app="app3" ng-controller="ctrl3">
+    <h5>姓：<input type="text" ng-model="lastName"></h5>
+    <h5>名：<input type="text" ng-model="firstName"></h5>
+    <h6>全名：{{fullName()}}</h6>
+</div>
+
+<script>
+    var app1 = angular.module("app1",[]);
+    app1.controller("ctr1",function($scope){
+        $scope.chosen=true;
+    });
+    angular.bootstrap(document.getElementById("app1"),['app1']);
+    var app = angular.module('app2', []);
+    app.controller('ctrl2', function($scope) {
+        $scope.names = ["AAA", "BBB", "CCC", "DDD", "EEE"];
+        $scope.lastname = "Adver";
+    });
+    angular.bootstrap(document.getElementById("app2"),['app2']);
+    var app3 = angular.module("app3",[]);
+    app3.controller("ctrl3",function ($scope) {
+        $scope.lastName="谭";
+        $scope.firstName="海青";
+        $scope.fullName = function () {
+            return $scope.lastName + "" + $scope.firstName;
+        };
+    });
+    angular.bootstrap(document.getElementById("app3"),['app3']);
+</script>
+
+</body>
+</html>

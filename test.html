@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第一个测试样品</title>
+</head>
+<script src="js/angular.min.js"></script>
+<script src="js/jquery-2.0.js"></script>
+<style>
+    table tr:nth-child(odd) {
+        background-color: lightgreen;
+    }
+    table tr:nth-child(even) {
+        background-color: bisque;
+    }
+</style>
+<body>
+<div ng-app="app1" ng-controller="ctrl">
+    <table border="1px" id="table1">
+        <tr ng-repeat="person in persons">
+            <td><button ng-click="userEdit($index)">编辑</button></td>
+            <td>{{$index + 1}}</td>
+            <td>{{person.Name}}</td>
+            <td>{{person.City}}</td>
+            <td>{{person.Country}}</td>
+        </tr>
+    </table>
+    <hr>
+    <button ng-click="userEdit('new')">添加新成员</button>
+    <h5 ng-hide="edit">修改成员：</h5>
+    <h5 ng-show="edit">新增成员：</h5>
+    <form name="form1">
+        姓名：<input name="name" type="text" ng-model="name" required><br><br>
+        城市：<input name="city" type="text" ng-model="city" required><br><br>
+        国家：<input name="country" type="text" ng-model="country" required><br><br>
+        <button ng-hide="edit" ng-disabled="form1.name.$error.required || form1.city.$error.required || form1.country.$error.required" ng-click="update(num)">确认修改</button>
+        <button ng-show="edit" ng-disabled="form1.name.$error.required || form1.city.$error.required || form1.country.$error.required" ng-click="add()">确认添加</button>
+    </form>
+</div>
+<script>
+    var app1 = angular.module("app1",[]);
+    app1.controller("ctrl", function ($scope, $http) {
+        $http.get("table.txt").success(function (response) {
+            $scope.persons = response.records;
+        });
+        $scope.edit = true;
+
+        $scope.userEdit = function (id) {
+            $scope.num = id;
+            if(id == 'new'){
+                $scope.edit = true;
+                $scope.name = "";
+                $scope.city = "";
+                $scope.country = "";
+                $scope.record = document.getElementById("table1").rows.length;
+            }else{
+                $scope.edit = false;
+                $scope.name = $scope.persons[id].Name;
+                $scope.city = $scope.persons[id].City;
+                $scope.country = $scope.persons[id].Country;
+            }
+        }
+        $scope.update = function (no) {
+            $scope.persons[no].Name = $scope.name;
+            $scope.persons[no].City = $scope.city;
+            $scope.persons[no].Country = $scope.country;
+        };
+
+        $scope.add = function () {
+            $scope.persons.push({"Name":$scope.name,"City":$scope.city,"Country":$scope.country});
+        }
+    });
+</script>
+</body>
+</html>

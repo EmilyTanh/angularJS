@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>练习API函数</title>
+</head>
+<script src="js/angular.min.js"></script>
+<body>
+<div ng-app="app1" ng-controller="ctrl1">
+    姓：{{lastname}}<br>
+    名：{{firstname}}<br>
+    姓名(函数)：{{name}}<br>
+    姓名(过滤器)：{{lastname + "" + firstname | lowercase}}<br>
+    姓名(函数，大写)：{{nameUpper}}<br>
+    姓名(过滤器)：{{lastname + "" + firstname | uppercase}}<br>
+    <hr>
+    字符串：{{string}}<br>
+    是否是字符串：{{pString}}<br>
+    数字：{{num}}<br>
+    是否是数字：{{isNum}}<br>
+</div>
+<script>
+    var app1 = angular.module("app1",[]);
+    app1.controller("ctrl1", function ($scope) {
+        $scope.firstname = "EMILY";
+        $scope.lastname = "TAN";
+        $scope.name = angular.lowercase($scope.firstname + "" + $scope.lastname);
+        $scope.nameUpper = angular.uppercase($scope.name);
+        $scope.string = "gssd123";
+        $scope.pString = angular.isString($scope.string);
+        $scope.num = "1233534534535";
+        $scope.isNum = angular.isNumber($scope.num);
+    })
+</script>
+</body>
+</html>
